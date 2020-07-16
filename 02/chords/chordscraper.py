@@ -21,10 +21,23 @@ for a in soup.find_all('a'):
         link = img['src']
         links.append(link)
 
-for i in range(1, len(links)): 
-    print("downloading: " + fcnames[i] + " " + links[i])          
 
-    urllib.request.urlretrieve(links[i], "02/chords/" + fcnames[i].replace('/', '_') + ".png")
+for i in range(1, len(links)):  
+    if '#' in fcnames[i] and '/' in fcnames[i]:
+        new = fcnames[i].replace('#', 'sharp')
+        new = new.replace('/', '_')
+        urllib.request.urlretrieve(links[i], "chords2/" + new + ".png")
+        print("ok")
+    elif '#' in fcnames[i]:   
+        urllib.request.urlretrieve(links[i], "chords2/" + fcnames[i].replace('#', "sharp") + ".png")
+    elif '/' in fcnames[i]:
+        urllib.request.urlretrieve(links[i], "chords2/" + fcnames[i].replace('/', '_') + ".png")
+    else:
+        urllib.request.urlretrieve(links[i], "chords2/" + fcnames[i] + ".png")
+
+    print("downloading: " + fcnames[i])
+
+
     
 
 
